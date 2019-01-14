@@ -1,7 +1,7 @@
 import bpy
 from bpy.app.handlers import persistent
 
-from . import ct
+from . import engine
 
 bl_info = {
     "name": "Cytokine",

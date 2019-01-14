@@ -1,7 +1,8 @@
-from distutils.core import setup
-from Cython.Build import cythonize
+from distutils.core import setup, Extension
 
 setup(
-    name="cytokine",
-    ext_modules = cythonize("cytokine/ct.pyx")
+    name="engine",
+    ext_modules = [
+        Extension("cytokine.engine", ["cytokine/engine/bindings.c"])
+    ]
 )
