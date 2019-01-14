@@ -1,3 +1,3 @@
 [submodule "cytokine/openvdb"]
-	path = cytokine/openvdb
+	path = cytokine/engine/openvdb
 	url = https://github.com/AcademySoftwareFoundation/openvdb.git

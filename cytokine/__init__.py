@@ -1,4 +1,5 @@
 import bpy
+from bpy.app.handlers import persistent
 
 from . import ct
 
@@ -143,8 +144,10 @@ class AddMeshOutput(bpy.types.Operator):
             bpy.ops.node.translate_attach_remove_on_cancel('INVOKE_DEFAULT')
         return result
 
+@persistent
 def depsgraph_update_post(scene):
-    pass
+    for object in bpy.context.depsgraph.updates:
+        print(object.id)
 
 def register():
     bpy.utils.register_class(OutputProperty)
