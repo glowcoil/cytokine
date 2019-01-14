@@ -1,5 +1,7 @@
 import bpy
 
+from . import ct
+
 bl_info = {
     "name": "Cytokine",
     "author": "Micah Johnston",
@@ -37,18 +39,20 @@ class MeshSocket(bpy.types.NodeSocket):
     def draw_color(self, context, node):
         return (0.5, 0.5, 0.5, 0.5)
 
+def on_update(self, context):
+    ct.inspect_mesh(self.mesh)
+
 class MeshInputNode(bpy.types.Node):
     bl_idname = "ct_MeshInputNode"
     bl_label = "Mesh Input"
 
-    mesh: bpy.props.PointerProperty(type=bpy.types.Mesh)
+    mesh: bpy.props.PointerProperty(type=bpy.types.Mesh, update=on_update)
 
     def init(self, context):
         self.outputs.new("ct_MeshSocket", "mesh")
 
     def draw_buttons(self, context, layout):
-        row = layout.row()
-        row.prop_search(self, "mesh", bpy.data, "meshes", icon="MESH_CUBE", text="")
+        layout.prop_search(self, "mesh", bpy.data, "meshes", icon="MESH_CUBE", text="")
 
 class MeshOutputNode(bpy.types.Node):
     bl_idname = "ct_MeshOutputNode"
