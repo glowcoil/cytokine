@@ -1,11 +1,15 @@
 #include "mesh.h"
 
-mesh from_blender_mesh(uintptr_t blender_mesh) {
-    Mesh *b_mesh = blender_mesh;
+#include <stdio.h>
 
-    mesh m;
+#include "blender/makesdna/DNA_mesh_types.h"
+#include "blender/makesdna/DNA_meshdata_types.h"
 
-    sb_add(&m.verts, b_mesh->totvert);
+uintptr_t from_blender_mesh(uintptr_t blender_mesh) {
+    Mesh *b_mesh = (Mesh *)blender_mesh;
 
-    printf("%d %d", b_mesh->totpoly, b_mesh->totloop);
+    mesh *m = malloc(sizeof(mesh));
+    sb_add(m->verts, b_mesh->totvert);
+
+    return m;
 }

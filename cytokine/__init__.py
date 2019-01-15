@@ -1,7 +1,7 @@
 import bpy
 from bpy.app.handlers import persistent
 
-from . import engine
+from .engine import engine
 
 bl_info = {
     "name": "Cytokine",
@@ -24,11 +24,9 @@ class CytokineNodeTree(bpy.types.NodeTree):
     mesh: bpy.props.PointerProperty(type=bpy.types.Mesh)
     outputs: bpy.props.CollectionProperty(type=OutputProperty)
 
-    def update(self):
-        print("update")
-
     def compute(self):
-        pass
+        for node in self.nodes:
+            engine.from_blender_mesh(node.mesh.as_pointer())
 
 class MeshSocket(bpy.types.NodeSocket):
     bl_idname = "ct_MeshSocket"
@@ -40,14 +38,11 @@ class MeshSocket(bpy.types.NodeSocket):
     def draw_color(self, context, node):
         return (0.5, 0.5, 0.5, 0.5)
 
-def on_update(self, context):
-    ct.inspect_mesh(self.mesh)
-
 class MeshInputNode(bpy.types.Node):
     bl_idname = "ct_MeshInputNode"
     bl_label = "Mesh Input"
 
-    mesh: bpy.props.PointerProperty(type=bpy.types.Mesh, update=on_update)
+    mesh: bpy.props.PointerProperty(type=bpy.types.Mesh)
 
     def init(self, context):
         self.outputs.new("ct_MeshSocket", "mesh")

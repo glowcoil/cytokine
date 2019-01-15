@@ -2,8 +2,6 @@
 #define MESH_H
 
 #include "stretchy_buffer.h"
-#include "blender/makesdna/DNA_mesh_types.h"
-#include "blender/makesdna/DNA_meshdata_types.h"
 
 typedef struct edge {
     int face;
@@ -28,6 +26,6 @@ typedef struct mesh {
     face *faces;
 } mesh;
 
-mesh from_blender_mesh(uintptr_t blender_mesh);
+uintptr_t from_blender_mesh(uintptr_t blender_mesh);
 
 #endif
